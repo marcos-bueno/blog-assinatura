@@ -1,15 +1,15 @@
-import { GetStaticProps } from "next";
-import Head from "next/head";
-import { SubscribeButton } from "../components/SubscribeButton";
-import { stripe } from "../services/stripe";
+import { GetStaticProps } from "next"
+import Head from "next/head"
+import { SubscribeButton } from "../components/SubscribeButton"
+import { stripe } from "../services/stripe"
 
-import styles from "./home.module.scss";
+import styles from "./home.module.scss"
 
 interface HomeProps {
   product: {
-    priceId: string;
-    amount: number;
-  };
+    priceId: string
+    amount: number
+  }
 }
 
 export default function Home({ product }: HomeProps) {
@@ -34,11 +34,11 @@ export default function Home({ product }: HomeProps) {
         <img src="/images/avatar.svg" alt=" Girl coding" />
       </main>
     </>
-  );
+  )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const price = await stripe.prices.retrieve("price_1IaOX0FrkJuMFY8OIsv5KpG9");
+  const price = await stripe.prices.retrieve("price_1IaOX0FrkJuMFY8OIsv5KpG9")
 
   const product = {
     pricedId: price.id,
@@ -46,11 +46,11 @@ export const getStaticProps: GetStaticProps = async () => {
       style: "currency",
       currency: "USD",
     }).format(price.unit_amount / 100),
-  };
+  }
   return {
     props: {
       product,
     },
     revalidate: 60 * 60 * 24, // 24 hours
-  };
-};
+  }
+}
